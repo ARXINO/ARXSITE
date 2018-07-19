@@ -1,0 +1,25 @@
+{%extends 'base.html'%}
+
+{% block head %}
+    <title>Üye Ol</title>
+{% endblock %}
+
+
+{% block login %}
+
+
+            <h1>Hemen Üye Ol!</h1>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Üye Ol</button>
+
+            </form>
+
+        <script>
+                    if(Number('{{ mesaj_kontrol }}') == 1){
+                        alert('{{ mesaj }}');
+                    }
+
+            </script>
+{% endblock %}

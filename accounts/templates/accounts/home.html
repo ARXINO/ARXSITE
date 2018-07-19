@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+<html>
+    <head>
+
+        {% block head %}
+            {% load static %}
+            <title>Ana Sayfa</title>
+            <link rel="stylesheet" href="{% static 'accounts/home.css' %}">
+        <body id="bg" style="background-image: url('{% static "images/backgrounds/arkaplan3.jpg"%}')"></body>
+
+        {% endblock %}
+
+    </head>
+
+    {% block login %}
+        <div class="col-12 col-md-8" >
+        <h2>Ana Sayfa</h2>
+        {% if giris_durum == 1 %}
+            {% if user.username in admin_list %}
+                <p>Hoşgeldiniz Sayın Admin {{ user.username }}</p>
+                <div class="input-group" >
+                  <div class="input-group-prepend" >
+
+
+                </div>
+                </div>
+            {% else %}
+                    <p>Hoşgeldiniz {{ user.username }}</p>
+            {% endif %}
+
+                <div class="d-inline-block bg-warning" style="opacity: 0.9;">
+                <h1 > Admin Duyuruları:</h1>
+                    <div id="duyuru_odasi" style="color:red;width:450px;height:300px;overflow: scroll;">
+                    {% for duyuru in duyurular %}
+                    <p>{{ duyuru }}</p>
+                    {% endfor %}
+                    </div>
+                {% if user.username in admin_list %}
+                <form method="POST">
+                {% csrf_token %}
+                <textarea id="mesaj2" name="duyuru" class="form-control" aria-label="duyuru" style="width: 300px;"></textarea>
+                <button id="mesaj_gonder2" type="submit"> Duyuruyu Gönder </button>
+                </form>
+                    {% endif %}
+                </div>
+
+                    <div class="d-inline-block bg-success" style="opacity: 0.9;">
+                        <h1> Sohbet Odası:</h1>
+                        <div id="mesaj_odasi" style="width:500px;height:300px;overflow: scroll;">
+                            {% for mesaj in kullanici_mesaj %}
+                                <p>{{ mesaj }}</p>
+                            {% endfor %}
+                        </div>
+                    <form method="POST">
+                    {% csrf_token %}
+                    <textarea id="mesaj1" name="mesaj" class="form-control" aria-label="mesaj" ></textarea>
+                    <button id="mesaj_gonder1" type="submit" > Gönder </button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p>
+            Arx Bank online olarak dünyanın dört bir yanındaki kullanıcılarla etkileşime geçip, sanal karakterinizle para kazanabileceğiniz bir oyundur.
+            </p>
+        {% endif %}
+        <script type="text/javascript">
+
+
+        $(document).ready( function(){
+        $('#mesaj_odasi').load('{{ kullanici_mesaj }}');
+        $('#duyuru_odasi').load('{{ duyurular }}');
+        refresh();
+        });
+
+        function refresh(){
+            setTimeout(function (){
+                $('#mesaj_odasi').load('message');
+                $('#duyuru_odasi').load('announcement');
+                refresh();
+            },1000)
+        }
+
+
+        var input = document.getElementById("mesaj1");
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode == 13) {
+                document.getElementById("mesaj_gonder1").click();
+            }
+        });
+        input = document.getElementById("mesaj2");
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode == 13) {
+                document.getElementById("mesaj_gonder2").click();
+            }
+        });
+
+
+
+        </script>
+
+    {% endblock %}
+
+
+    <body>
+        {% block body %}
+        <ul class="navbar-nav mr-auto">
+        {% if giris_durum == 1 %}
+            <li class="nav-item">
+            <a class="nav-link" href="/home/profile">Oyuna Başla </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_view' %}">Çıkış Yap </a>
+          </li>
+
+        {% else %}
+           <li class="nav-item">
+            <a class="nav-link"  href="/home/register">Üye Ol! </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/login">Giriş Yap </a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/home/reset-password">Şifremi Unuttum</a>
+          </li>
+        {% endif %}
+
+
+          <li class="nav-item">
+            <a class="nav-link" href="/home/howtoplay">Nasıl Oynanır?</a>
+          </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/home/about-us">Hakkımızda..</a>
+          </li>
+        </ul>
+            {% endblock %}
+    </body>
+</html>

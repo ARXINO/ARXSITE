@@ -1,0 +1,91 @@
+<html>
+    <head>
+        {% block head %}
+            {% load static %}
+            <title>Ana Sayfa</title>
+            <link rel="stylesheet" href="{% static 'accounts/bahce.css' %}">
+        <body id="bg" style="background-image: url('{% static "images/backgrounds/bahce.png"%}')"></body>
+        {% endblock %}
+    </head>
+
+    <script>
+        elma_id="elma";
+        arpa_id="arpa";
+    </script>
+        {% for a in arpa_tohum_range %}
+            {% if karakter.karakter_durum == "Boş Bekliyor" %}
+            <img src="{% static 'images/garden/toprak-parca.png'  %}" id="arpa{{ a }}">
+            {% endif %}
+        {% endfor %}
+
+        {% for b in elma_tohum_range %}
+            {% if karakter.karakter_durum == "Boş Bekliyor" %}
+            <img src="{% static 'images/garden/toprak-parca.png'  %}" id="elma{{ b }}">
+            {% endif %}
+        {% endfor %}
+
+<canvas id="scr" width="1180" height="670" style="border:0.001px transparent;"></canvas>
+    {% if karakter.karakter_durum == "Boş Bekliyor" %}
+        <img class="karakter" style="display: block;left: 500px;top: 400px" src="{% static 'images/character/animasyon/karakter-saf-bahce.png' %}">
+    {% elif karakter.karakter_durum == "Tohum Topluyor" %}
+        <img class="karakter" style="display: block;left: 500px;top: 360px"  src="{% static 'images/character/animasyon/tohum_topla2.gif' %}">
+    {% elif karakter.karakter_durum == "Arpa Tohumu Dikiliyor" %}
+        <img class="karakter" style="display: block;left: 100px;top: 430px"  src="{% static 'images/character/animasyon/tohum_topla2.gif' %}">
+    {% elif karakter.karakter_durum == "Elma Tohumu Dikiliyor" %}
+        <img class="karakter" style="display: block;left: 600px;top: 430px"  src="{% static 'images/character/animasyon/tohum_topla2.gif' %}">
+    {% else %}
+        <img class="karakter" style="display: block;left: 500px;top: 400px" src="{% static 'images/character/animasyon/karakter-saf-bahce.png' %}">
+    {% endif %}
+
+
+
+<script>
+            a=0;
+            pozisyon = 0;
+            y_pozisyon = 450;
+
+            for (a; a<Number({{ karakter.arpa_tohumu_sure }}); a++ )
+            {
+                    var css_ismi = 'cssClass' + String(a);
+                    var karakter_id = "arpa"+String(a);
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.innerHTML = '.' + css_ismi + ' { position: absolute; left: ' + String(pozisyon) + 'px; top: ' + String(y_pozisyon) + 'px;}';
+                    document.getElementsByTagName('head')[0].appendChild(style);
+                    document.getElementById(karakter_id).className = css_ismi;
+
+                    pozisyon += 30;
+
+                    if (pozisyon > 430) {
+                        pozisyon = 0;
+                        y_pozisyon += 18;
+                    }
+            }
+
+            b=0;
+            pozisyon2 = 500;
+            y_pozisyon2 = 450;
+            for (b; b<Number({{ karakter.elma_tohumu_sure }}); b++ )
+            {
+                    var css_ismi = 'cssClass_elma' + String(b);
+                    var karakter_id = "elma"+String(b);
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.innerHTML = '.' + css_ismi + ' { position: absolute; left: ' + String(pozisyon2) + 'px; top: ' + String(y_pozisyon2) + 'px;}';
+                    document.getElementsByTagName('head')[0].appendChild(style);
+                    document.getElementById(karakter_id).className = css_ismi;
+
+                    pozisyon2 += 100;
+
+                    if (pozisyon2 > 900) {
+                        pozisyon2 = 500;
+                        y_pozisyon2 += 50;
+                    }
+            }
+
+
+
+
+
+</script>
+</html>

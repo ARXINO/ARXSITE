@@ -1,0 +1,28 @@
+ body{
+    background-color: #4CAF50;
+}
+
+
+    .sac2{
+        position: absolute;
+        left: 25px;
+        top: 10px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .goz2{
+        position: absolute;
+        left: 25px;
+        top: 20px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .agiz2{
+        position: absolute;
+        left: 30px;
+        top: 20px;
+        width: 150px;
+        height: 150px;
+    }

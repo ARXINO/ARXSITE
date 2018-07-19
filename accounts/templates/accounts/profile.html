@@ -1,0 +1,39 @@
+
+<html>
+    <head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'accounts/profile.css' %}" type="text/css">
+        {% block head %}
+            <title>Ana Sayfa</title>
+        {% endblock %}
+    </head>
+
+    {% block login %}
+        <h1>Kullanıcı Profili</h1>
+        <button onclick="oyuna_gec()">BAŞLA</button>
+        <button onclick="menuye_gec()">Geri Dön</button>
+        <button onclick="edite_gec()">Profili Düzenle</button>
+        <p class="yazi-tarzi">Kullanıcı Adı : {{ user }}</p>
+        <p class="yazi-tarzi">İsim : {{ user.first_name }}</p>
+        <p class="yazi-tarzi">Soyisim : {{ user.last_name }}</p>
+        <p class="yazi-tarzi">Email : {{ user.email }}</p>
+        {% if karakter.karakter_gorunus != "x" %}
+        <p class="yazi-tarzi">Görünüş :</p>
+        <iframe style="display:inline-block;" frameborder="1"  width="200" height="200" src="{% url 'profile_karakter' %}" name="encode_iframe" id="encode_iframe"></iframe>
+        {% endif %}
+        <script>
+        oyuna_gec = function(){
+            window.location.replace("/home/game/");
+        }
+        menuye_gec = function(){
+            window.location.replace("/home");
+        }
+        edite_gec = function(){
+            window.location.replace("/home/profile/edit");
+        }
+    </script>
+    {% endblock %}
+
+
+
+</html>

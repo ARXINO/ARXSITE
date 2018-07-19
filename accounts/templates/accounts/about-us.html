@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+<html>
+
+
+
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'accounts/style.css' %}" type="text/css">
+        {% block head %}
+
+            <title>ARX BANK</title>
+        {% endblock %}
+    </head>
+
+
+
+
+    {% block login %}
+
+
+        <div class="container" style="display:inline-block;">
+
+        <div class="container" >
+
+<h1> Biz Kimiz? </h1>
+<p> Üniversitede okuyan sıradan 2 kişiyiz. </p>
+
+<h1> Profilimiz </h1>
+<p> Founder: Emre ŞAHİN  </p>
+<p> Co-Founder: Arda PEÇEL  </p>
+
+        </div>
+        </div>
+    {% endblock %}
+
+    <body>
+        {% block body %}
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/home/howtoplay">Nasıl Oynanır?</a>
+          </li>
+        </ul>
+            {% endblock %}
+    </body>
+</html>

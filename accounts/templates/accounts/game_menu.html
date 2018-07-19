@@ -1,0 +1,128 @@
+
+<html>
+    <head>
+        {% load static %}
+        <canvas id="scr" width="1100" height="670" style="border:0.001px transparent;"></canvas>
+        <link rel="stylesheet" href="{% static 'accounts/game_menu.css' %}" type="text/css">
+
+    </head>
+
+        <a class="button sac_yazi" style="display: block" > Saç Stili </a>
+        <a class="button sac_sol" style="display: block" onclick="sac_sol()"> < </a>
+        <a class="button sac_sag" style="display: block" onclick="sac_sag()"> > </a>
+
+        <a class="button goz_yazi" style="display: block" > Göz Rengi </a>
+        <a class="button goz_sol" style="display: block" onclick="goz_kahve()"> < </a>
+        <a class="button goz_sag" style="display: block" onclick="goz_yesil()"> > </a>
+
+        <a class="button agiz_yazi" style="display: block" > Dudak Şekli </a>
+        <a class="button agiz_duz" style="display: block" onclick="agiz_duz()"> < </a>
+        <a class="button agiz_elips" style="display: block" onclick="agiz_elips()"> > </a>
+
+        <form method="POST">
+            {% csrf_token %}
+                <input id="karakter-gonder" style="display: none" type="text" value="DENEME" name="ozellikler" >
+                <button class="button karakter_olustur" style="display: block" type="submit" onclick="karakter_olustur()"> Karakteri Oluştur </button
+
+        </form>
+
+
+    <img id="memur-saci" class="sac" style="display: none"  src="{% static 'images/character/sac/memur-saci.png' %}" alt="memur saci">
+    <img id="kafa" class="sac" style="display: block"  src="{% static 'images/character/sac/kafa.png' %}" alt="kafa">
+
+    <img id="goz_yesil" class="goz" style="display: none"  src="{% static 'images/character/goz/yesil_goz.png' %}" alt="yesil goz">
+    <img id="goz_kahve" class="goz" style="display: none"  src="{% static 'images/character/goz/kahverengi_goz.png' %}" alt="kahverengi goz">
+
+    <img id="agiz_duz" class="agiz" style="display: none"  src="{% static 'images/character/agiz/agiz.png' %}" alt="duz agiz">
+    <img id="agiz_elips" class="agiz" style="display: none"  src="{% static 'images/character/agiz/agiz2.png' %}" alt="elips dudak">
+
+    <script>
+        var scr = document.getElementById("scr").getContext("2d");
+
+        var sac = 0;
+        var goz = 0;
+        var agiz = 0;
+
+        function sac_sol() {
+            sac=0;
+            scr.clearRect(0,0,300,100)
+            scr.font = '30px Arial';
+            scr.fillStyle = 'red';
+            scr.fillText("Kel",120,70);
+            var memur_saci = document.getElementById("memur-saci");
+            var kel = document.getElementById("kafa");
+            memur_saci.style='display: none';
+            kel.style='display: block';
+
+        }
+        function sac_sag() {
+            sac=1;
+            scr.clearRect(0,0,300,100)
+            scr.font = '30px Arial';
+            scr.fillStyle = 'red';
+            scr.fillText("Memur Saçı",120,70);
+            var memur_saci = document.getElementById("memur-saci");
+            var kel = document.getElementById("kafa");
+            kel.style='display: none';
+            memur_saci.style='display: block';
+        }
+
+        function goz_yesil() {
+            goz=1;
+            scr.clearRect(0,100,400,200)
+            scr.font = '30px Arial';
+            scr.fillStyle = 'red';
+            scr.fillText("Yeşil Göz",120,200);
+            var goz_yesil = document.getElementById("goz_yesil");
+            var goz_kahve = document.getElementById("goz_kahve");
+            goz_kahve.style='display: none';
+            goz_yesil.style='display: block';
+        }
+        function goz_kahve() {
+            goz=0;
+            scr.clearRect(0,100,400,200)
+            scr.font = '30px Arial';
+            scr.fillStyle = 'red';
+            scr.fillText("Kahverengi Göz",120,200);
+            var goz_yesil = document.getElementById("goz_yesil");
+            var goz_kahve = document.getElementById("goz_kahve");
+            goz_yesil.style='display: none';
+            goz_kahve.style='display: block';
+        }
+
+        function agiz_duz() {
+            agiz=0;
+            scr.clearRect(0,230,400,600)
+            scr.font = '30px Arial';
+            scr.fillStyle = 'red';
+            scr.fillText("Düz Dudak",120,340);
+            var agiz_duz = document.getElementById("agiz_duz");
+            var agiz_elips = document.getElementById("agiz_elips");
+            agiz_elips.style='display: none';
+            agiz_duz.style='display: block';
+        }
+        function agiz_elips() {
+            agiz = 1;
+            scr.clearRect(0,230,400,600)
+            scr.font = '30px Arial';
+            scr.fillStyle = 'red';
+            scr.fillText("Elips Dudak",120,340);
+            var agiz_duz = document.getElementById("agiz_duz");
+            var agiz_elips = document.getElementById("agiz_elips");
+            agiz_duz.style='display: none';
+            agiz_elips.style='display: block';
+        }
+
+        karakter_olustur = function(){
+            var karakterGonder = document.getElementById("karakter-gonder");
+            karakterGonder.value=String(sac)+String(goz)+String(agiz);
+            alert("Karakteriniz Başarıyla Oluşturuldu !");
+        }
+    </script>
+
+
+
+    <body id="bg" style="background-image: url('{% static "images/backgrounds/main-menu.jpg"%}')">
+
+    </body>
+</html>

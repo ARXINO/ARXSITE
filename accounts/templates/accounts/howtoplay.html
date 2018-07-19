@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+<html>
+
+
+
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'accounts/style.css' %}" type="text/css">
+        {% block head %}
+
+            <title>ARX BANK</title>
+        {% endblock %}
+    </head>
+
+
+
+
+    {% block login %}
+
+
+        <div class="container" style="display:inline-block;">
+
+        <div class="container" >
+
+            <h1> ArxBank Nedir? </h1>
+
+<p> ArxBank online olarak dünyanin dört bir yanindaki kullanicilarla etkilesime geçip, sanal karakterinizle para kazanabileceginiz bir oyundur.
+ArxBank'ta kendi eviniz ve esyalarinizi özellestirebilir, isinizi belirleyebilir, ticaret yapabilir, isinizdeki ve ticaretteki basariniza göre arxin
+(oyundaki sanal para) kazanabilir, bu kazandiginiz arxinleri gerçek paraya dönüstürebilirsiniz. </p>
+
+<h2> Nasıl Oynanir? </h2>
+
+<p> ArxBank'a ücretsiz olarak kayit olabilir ve çalismaya baslayabilirsiniz. Hayatta kalmak için temel gereksinimlerinizi sagladiktan sonra,
+para kazanmak için çalismaya baslamalisiniz. Isinizi kendiniz belirleyebilirsiniz. Bu isler çiftçi, bankaci vb gibi akliniza gelebilecek tüm isler olabilir.
+Bu sirada yasam alaninizi belirleyebilir(köy,sehir..) evinizi her yönden gelistirebilirsiniz.</p>
+
+        </div>
+        </div>
+    {% endblock %}
+
+    <body>
+        {% block body %}
+        <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/home/about-us">Hakkımızda..</a>
+          </li>
+        </ul>
+            {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,85 @@
+
+<html>
+    <head>
+        <script>
+            a = 0;
+            pozisyon = 70;
+            y_pozisyon = 270;
+            yazi_pozisyon=70;
+            yazi_pozisyon2=70;
+            y_yazi_pozisyon=250;
+            y_yazi_pozisyon2=480;
+        </script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'accounts/game_bayir.css' %}" type="text/css">
+        <canvas id="scr" width="1180" height="670" style="border:0.001px transparent;">
+
+        </canvas>
+            <img class="arkaplan-cim" style="display: block"  src="{% static 'images/backgrounds/arkaplan2-cim.png' %}" alt="cim" id="cim">
+
+
+                {% for y in gelen_id %}
+                    {% if y == secili_karakter %}
+                    <a href="/home/game/game_bahce" id="/home/game/game_bahce" onclick="document.location=this.id; return false;" >
+                    <img style="display: block" src="{% static 'images/character/animasyon/harita-bekle.gif' %}" alt="karakter" id={{ y }}>
+                    </a>
+                    {% else %}
+                    <img style="display: block" src="{% static 'images/character/animasyon/idle3.png' %}" alt="karakter" id={{ y }}>
+                    {% endif %}
+                {% endfor %}
+
+
+
+            <script>
+
+            for (a; a<Number({{ oyuncu_sayisi }}); a++ )
+            {
+                if(pozisyon <= 1070) {
+                    var css_ismi = 'cssClass' + String(a);
+                    var karakter_id = 'karakter' + String(a);
+                    var style = document.createElement('style');
+                    style.type = 'text/css';
+                    style.innerHTML = '.' + css_ismi + ' { position: absolute; left: ' + String(pozisyon) + 'px; top: ' + String(y_pozisyon) + 'px;}';
+                    document.getElementsByTagName('head')[0].appendChild(style);
+                    document.getElementById(karakter_id).className = css_ismi;
+
+                    pozisyon += 250;
+                    if (pozisyon > 1070) {
+                        ikinic_sira=1;
+                        pozisyon = 70;
+                        y_pozisyon = 500;
+                        yazi_pozisyon=70;
+                    }
+
+            }}
+
+
+            </script>
+    {% for x in oyuncular %}
+        <script>
+        var scr = document.getElementById("scr").getContext("2d");
+            if (yazi_pozisyon>1070){
+                scr.font = '18px Arial';
+                scr.fillStyle = 'black';
+                scr.fillText('{{x}}',yazi_pozisyon2,y_yazi_pozisyon2);
+                yazi_pozisyon2+=250;
+            }else {
+
+            scr.font = '18px Arial';
+            scr.fillStyle = 'black';
+            scr.fillText('{{x}}',yazi_pozisyon,y_yazi_pozisyon);
+            yazi_pozisyon+=250;
+            }
+
+        </script>
+    {% endfor %}
+
+    </head>
+
+
+
+
+    <body id="bg" style="background-image: url('{% static "images/backgrounds/arkaplan2-c.png"%}')">
+
+    </body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+<html>
+    <head>
+        {% block head %}
+            <title>Ana Sayfa</title>
+        {% endblock %}
+    </head>
+
+    {% block login %}
+        <div class="container">
+            <form method="post">
+                {%  csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="Save">Submit</button>
+
+            </form>
+
+
+        </div>
+    {% endblock %}
+
+    <body>
+        {% block body %}
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+
+            <a class="nav-link" href="/home/register">Üye Ol! </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/login">Giriş Yap </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nasıl Oynanır?</a>
+          </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Hakkımızda..</a>
+          </li>
+        </ul>
+            {% endblock %}
+    </body>
+</html>

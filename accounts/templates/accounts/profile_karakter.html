@@ -1,0 +1,39 @@
+
+<html>
+    <head>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'accounts/profile_karakter.css' %}" type="text/css">
+
+
+    </head>
+
+    {% block login %}
+
+        {% if a1 == '0' %}
+                <img id="kafa" class="sac2"  src="{% static 'images/character/sac/kafa.png' %}" alt="kafa">
+        {% elif a1 == '1' %}
+                <img id="memur-saci" class="sac2" src="{% static 'images/character/sac/memur-saci.png' %}" alt="memur saci">
+        {% endif %}
+
+        {% if a2 == '0' %}
+                <img id="goz_kahve" class="goz2"   src="{% static 'images/character/goz/kahverengi_goz.png' %}" alt="kahverengi goz">
+        {% elif a2 == '1' %}
+                <img id="goz_yesil" class="goz2"   src="{% static 'images/character/goz/yesil_goz.png' %}" alt="yesil goz">
+        {% endif %}
+
+        {% if a3 == '0' %}
+                <img id="agiz_duz" class="agiz2"   src="{% static 'images/character/agiz/agiz.png' %}" alt="duz agiz">
+        {% elif a3 == '1' %}
+                <img id="agiz_elips" class="agiz2"   src="{% static 'images/character/agiz/agiz2.png' %}" alt="elips dudak">
+        {% endif %}
+
+    {% endblock %}
+
+
+    <body>
+        {% block body %}
+
+            {% endblock %}
+    </body>
+</html>

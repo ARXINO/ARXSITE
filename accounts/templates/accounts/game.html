@@ -1,0 +1,421 @@
+
+<html>
+
+
+
+    <head>
+     <!-- Bootstrap core CSS -->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'accounts/game.css' %}" type="text/css">
+        {% block head %}
+            <title>ARX BANK</title>
+        {% endblock %}
+    </head>
+
+
+        {% block body %}
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="/home">ARX BANK</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+
+        <ul class="navbar-nav mr-auto">
+
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout_view' %}">Çıkış Yap </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/howtoplay">Nasıl Oynanır?</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/home/about-us">Hakkımızda..</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+
+
+            {% if karakter.karakter_durum == "Tohum Dikiyor" %}
+            {% if karakter.arpa_tohumu > 0 or karakter.elma_tohumu > 0  %}
+            <div id="tohum_dik_arkaplan" class="d-inline-block bg-danger" style="position:absolute;left: 450px;top:300px;border-radius: 12px;min-width: 300px;min-height: 150px;text-align: center;">
+
+                <b>Tohum Seç:</b>
+                <div>
+                {% if karakter.arpa_tohumu > 0 %}
+                    {% if karakter.arpa_tohumu_sure < 150 %}
+                    <form method="POST">
+                    {% csrf_token %}
+                        <input id="arpa_ek_input" value="0" style="width: 50px;">
+                        <textarea id="arpa_ek" style="display: none" name="arpa_ek">0</textarea>
+                        <button id="arpa_ek_button" style="border-radius: 2px;background-color:#3e8e41 " onclick="arpa_ek_deger()" type="submit" class="btn btn-primary">Arpa Tohumu Ek</button>
+                    </form>
+                    {% endif %}
+                {% endif %}
+                </div>
+                <div>
+                {% if karakter.elma_tohumu > 0 %}
+                    {% if karakter.elma_tohumu_sure < 20 %}
+                     <form method="POST">
+                    {% csrf_token %}
+                        <input id="elma_ek_input" value="0" style="width: 50px;">
+                        <textarea id="elma_ek" style="display: none" name="elma_ek">0</textarea>
+                        <button id="elma_ek_button" style="border-radius: 2px;background-color:#5b80b2 " onclick="elma_ek_deger()" type="submit" class="btn btn-primary">Elma Tohumu Ek</button>
+                    </form>
+                    {% endif %}
+                {% endif %}
+                </div>
+            {% endif %}
+            </div>
+            {% endif %}
+
+    {% endblock %}
+
+    {% block login %}
+
+            <script>
+                var kalan_sure = Number({{ zaman }});
+                var bulunan_tohum = 0;
+                var bulunan_tohum_tur = 0;
+                var elma_tohum=0;
+                var tohum_ara;
+                var tohum_dik;
+                var arpa_ek1 = {{ karakter.arpa_tohumu }};
+                var elma_ek1 = {{ karakter.elma_tohumu }};
+
+
+
+                {% if hata_mesaji != "" %}
+                    alert("{{ hata_mesaji }}");
+                {% endif %}
+
+
+                function arpa_ek_deger() {
+                    var arpa_text=document.getElementById("arpa_ek");
+                    var arpa_input=document.getElementById("arpa_ek_input");
+
+
+                    if(arpa_ek1 >=arpa_input.value){
+                        arpa_text.innerHTML = arpa_input.value;
+
+                    }else {
+                        alert("Yetersiz Tohum");
+
+                    }
+                }
+
+                function elma_ek_deger() {
+                    var elma_text=document.getElementById("elma_ek");
+                    var elma_input=document.getElementById("elma_ek_input");
+
+                    if(elma_ek1 >= elma_input.value){
+                        elma_text.innerHTML = elma_input.value;
+
+                    }else {
+                        alert("Yetersiz Tohum");
+                    }
+                }
+
+
+                {% if karakter_durum == "Arpa Tohumu Dikiliyor" %}
+                    if (kalan_sure>0){
+                        tohum_dik = setInterval(tohumdik_fonksiyon, 1000);
+                    }
+                {% elif karakter_durum == "Elma Tohumu Dikiliyor" %}
+                    if (kalan_sure>0){
+                        tohum_dik = setInterval(tohumdik_fonksiyon, 1000);
+                    }
+                {% elif karakter_durum == "Tohum Topluyor" %}
+                    if (kalan_sure>0){
+                        tohum_ara = setInterval(tohumara_fonksiyon, 1000);
+                    }
+                {% endif %}
+
+
+
+                    function tohumara_fonksiyon() {
+                        if (kalan_sure > 0) {
+                            kalan_sure -= 1;
+                            document.getElementById("demo").innerHTML = "Bitmesine Kalan Süre : " + String(kalan_sure);
+                        } else if (kalan_sure == 0) {
+                            clearInterval(tohum_ara);
+                            bulunan_tohum = String(Math.floor((Math.random() * 10)));
+                            bulunan_tohum_tur = String(Math.floor(Math.random() * 2) + 1);
+                            elma_tohum = String(Math.floor((Math.random() * 2)));
+                            if(bulunan_tohum_tur==1) {
+                                document.getElementById("sakla_yazi").innerText = bulunan_tohum + " tane arpa tohumu bulundu!";
+                                document.getElementById("gonder_yazi").innerText= "arpa:"+bulunan_tohum;
+                            }else if(bulunan_tohum_tur==2) {
+                                document.getElementById("sakla_yazi").innerText = elma_tohum + " tane elma ağacı tohum bulundu!";
+                                document.getElementById("gonder_yazi").innerText= "elma:"+elma_tohum;
+                            }
+                            document.getElementById("sakla_yazi").style.display = "block";
+                            document.getElementById("sakla").innerText = "Envantere ekle!";
+                            document.getElementById("sakla").style.display = "block";
+
+                        }
+                    }
+
+
+                function tohumdik_fonksiyon(){
+
+                    {% if karakter.karakter_durum == "Arpa Tohumu Dikiliyor" %}
+                        if(kalan_sure>0){
+                            kalan_sure-=1;
+                            document.getElementById("demo").innerHTML = "Bitmesine Kalan Süre : "+String(kalan_sure);
+                        }else if(kalan_sure == 0){
+                            clearInterval(tohum_dik);
+                            document.getElementById("sakla_yazi").innerText= String({{ dikilen_arpa }})+" tane tohum dikildi!";
+                            document.getElementById("sakla_yazi").style.display="block";
+                            document.getElementById("gonder_yazi").innerText= "arpa";
+                            document.getElementById("sakla").innerText= "Eylemi Bitir";
+                            document.getElementById("sakla").style.display="block";
+                            document.getElementById("sakla").style.display="block";
+                        }
+                    {% elif karakter.karakter_durum == "Elma Tohumu Dikiliyor" %}
+                        if(kalan_sure>0){
+                            kalan_sure-=1;
+                            document.getElementById("demo").innerHTML = "Bitmesine Kalan Süre : "+String(kalan_sure);
+                        }else if(kalan_sure == 0){
+                            clearInterval(tohum_dik);
+                            document.getElementById("sakla_yazi").innerText= " tane tohum dikildi!";
+                            document.getElementById("sakla_yazi").style.display="block";
+                            document.getElementById("gonder_yazi").innerText= "elma";
+                            document.getElementById("sakla").innerText= "Eylemi Bitir";
+                            document.getElementById("sakla").style.display="block";
+                        }
+                    {% endif %}
+                }
+            </script>
+
+        <div class="container" style="display:inline-block;">
+
+        <div  class="container" >
+            <h2>Kullanıcı : {{ name }}</h2>
+            <h6>Para : {{ money }}</h6>
+            <h6>Durum : {{ karakter.karakter_durum }} </h6>
+
+            <h5 id="demo"></h5>
+            <h5 style="display: none" id="sakla_yazi"></h5>
+
+            <form method="POST">
+            {% csrf_token %}
+                <textarea id="gonder_yazi" style="display: none" name="gonder_yazi">x</textarea>
+                <button id="sakla" type="submit" style="display: none">Olay</button>
+                <script>elma_tohum=0;bulunan_tohum=0;bulunan_tohum_tur=0;document.getElementById("gonder_yazi").innerText='';</script>
+            </form>
+                <div id="envanter" style="position: absolute;right: 0px;top: 56px;">
+                <div id="enavanterheader" style="position: absolute;"></div>
+                <div  class="d-inline-block bg-warning" style="border-radius: 12px;min-width: 300px;min-height: 150px;text-align: center">
+                    <br>
+                    <b>Envanter:</b>
+                    <div>
+                    {% if karakter.arpa_tohumu != 0 %}
+                    Arpa Tohumu : {{ karakter.arpa_tohumu }}
+                    {% endif %}
+                    </div>
+                    <div>
+                    {% if karakter.elma_tohumu != 0 %}
+                    Elma Tohumu : {{ karakter.elma_tohumu }}
+                    {% endif %}
+                    </div>
+                    <br>
+                    </div>
+                </div>
+
+
+                    <div id="sohbet" style="position: absolute;right: 30px;bottom: 70px;">
+                    <div id="sohbetheader" class="d-inline-block bg-success" style="position:absolute;">
+                    <div class="d-inline-block bg-success" style="position:absolute;right: 50px;bottom: 50px;opacity: 0.9;">
+                        <h1>Sürüklenebilir Sohbet Odası:</h1>
+                        <div id="mesaj_odasi" style="width:600px;height:300px;overflow: scroll;">
+                            {% for mesaj in kullanici_mesaj %}
+                                <p>{{ mesaj }}</p>
+                            {% endfor %}
+                        </div>
+                     </div>
+                    </div>
+                    </div>
+
+        </div>
+
+
+            <div class="btn-group">
+
+            <div class="dropdown">
+              <button class="dropbtn">İnşa Et</button>
+              <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn">Çiftçi</button>
+              <div class="dropdown-content">
+
+                <form method="POST">
+                {% csrf_token %}
+                    <textarea id="tohum_ara" style="display: none" name="tohum_ara" aria-label="mesaj">0</textarea>
+                    <input class="button1" id="tohum_ara_button1" type="submit" onclick="ara_tohum()" value="Tohum Topla">
+                </form>
+
+                <form method="POST">
+                {% csrf_token %}
+                    <textarea id="tohum_dik" style="display: none" name="tohum_dik" aria-label="mesaj" >0</textarea>
+                    <input class="button1" id="tohum_dik_button1" type="submit"  value="Tohum Dik">
+                </form>
+
+
+                 <form method="POST">
+                {% csrf_token %}
+                    <textarea id="tohum_ara" style="display: none" name="tohum_ara" aria-label="mesaj" >0</textarea>
+                    <input class="button1" type="submit" value="">
+                </form>
+
+                 <form method="POST">
+                {% csrf_token %}
+                    <textarea id="tohum_ara" style="display: none" name="tohum_ara" aria-label="mesaj" >0</textarea>
+                    <input class="button1" type="submit" value="">
+                </form>
+
+                 <form method="POST">
+                {% csrf_token %}
+                    <textarea id="tohum_ara" style="display: none" name="tohum_ara" aria-label="mesaj" >0</textarea>
+                    <input class="button1" type="submit" value="">
+                </form>
+
+
+                 <form method="POST">
+                {% csrf_token %}
+                    <textarea id="tohum_ara" style="display: none" name="tohum_ara" aria-label="mesaj" >0</textarea>
+                    <input class="button1" type="submit" value="">
+                </form>
+
+
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn">Keresteci</button>
+              <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn">Balıkçı</button>
+              <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+
+            <div class="dropdown">
+              <button class="dropbtn">Madenci</button>
+              <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+
+
+
+            </div>
+
+
+        <script>
+
+
+            $(document).ready( function(){
+            $('#mesaj_odasi').load('{{ kullanici_mesaj }}');
+            refresh();
+            });
+
+            function refresh(){
+                setTimeout(function (){
+                    $('#mesaj_odasi').load("http://127.0.0.1:8000/home/message");
+                    refresh()
+                },1000)
+            }
+
+        dragElement(document.getElementById("envanter"));
+        dragElement(document.getElementById("sohbet"));
+        function dragElement(elmnt) {
+          var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+          if (document.getElementById(elmnt.id + "header")) {
+            /* if present, the header is where you move the DIV from:*/
+            document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+          } else {
+            /* otherwise, move the DIV from anywhere inside the DIV:*/
+            elmnt.onmousedown = dragMouseDown;
+          }
+
+          function dragMouseDown(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // get the mouse cursor position at startup:
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            // call a function whenever the cursor moves:
+            document.onmousemove = elementDrag;
+          }
+
+          function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            // calculate the new cursor position:
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            // set the element's new position:
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+          }
+
+          function closeDragElement() {
+            /* stop moving when mouse button is released:*/
+            document.onmouseup = null;
+            document.onmousemove = null;
+          }
+        }
+
+        var input = document.getElementById("mesaj");
+        input.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.keyCode == 13) {
+                document.getElementById("mesaj_gonder").click();
+            }
+        });
+
+
+
+
+
+
+
+        </script>
+            <iframe style="display:inline-block;" frameborder="1"  width="1200" height="700" src="{% url sayfa %}" name="encode_iframe" id="encode_iframe"></iframe>
+
+        </div>
+    {% endblock %}
+
+    <body>
+
+    <br>
+    <br>
+
+    </body>
+</html>

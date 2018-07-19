@@ -1,0 +1,242 @@
+body{
+    background-size: 1200px 700px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;
+}
+    .sac{
+        position: absolute;
+        left: 400px;
+        top: 30px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .goz{
+        position: absolute;
+        left: 400px;
+        top: 40px;
+        width: 150px;
+        height: 150px;
+    }
+
+    .agiz{
+        position: absolute;
+        left: 405px;
+        top: 40px;
+        width: 150px;
+        height: 150px;
+    }
+
+
+
+
+    .sac_sol{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 100px;
+        top: 100px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .sac_sol:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+
+    }
+    .sac_sol:active{
+        transform: scale(1.3);
+
+    }
+    .sac_sag{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 285px;
+        top: 100px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .sac_sag:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+    }
+    .sac_sag:active{
+        transform: scale(1.3);
+    }
+    .sac_yazi{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #000000;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 5px 20px;
+        position: absolute;
+        left: 150px;
+        top: 110px;
+        border-radius: 12px;
+        transition: transform .2s;
+    }
+
+
+    .goz_sol{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 100px;
+        top: 230px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .goz_sol:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+
+    }
+    .goz_sol:active{
+        transform: scale(1.3);
+
+    }
+    .goz_sag{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 285px;
+        top: 230px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .goz_sag:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+    }
+    .goz_sag:active{
+        transform: scale(1.3);
+    }
+    .goz_yazi{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #000000;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 5px 20px;
+        position: absolute;
+        left: 150px;
+        top: 240px;
+        border-radius: 12px;
+        transition: transform .2s;
+    }
+
+
+    .agiz_duz{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 100px;
+        top: 360px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .agiz_duz:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+
+    }
+    .agiz_duz:active{
+        transform: scale(1.3);
+
+    }
+    .agiz_elips{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 285px;
+        top: 360px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .agiz_elips:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+    }
+    .agiz_elips:active{
+        transform: scale(1.3);
+    }
+    .agiz_yazi{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #000000;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 5px 20px;
+        position: absolute;
+        left: 140px;
+        top: 370px;
+        border-radius: 12px;
+        transition: transform .2s;
+    }
+
+
+    .karakter_olustur{
+        color: blue;
+        background-color: burlywood;
+        border:solid 2px #4CAF50;
+        font-family: "Courier";
+        text-align: center;
+        font-size: 18px;
+        padding: 15px 20px;
+        position: absolute;
+        left: 100px;
+        top: 450px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform .2s;
+    }
+    .karakter_olustur:hover{
+        transform: scale(1.2);
+        background-color: greenyellow;
+
+    }
+    .karakter_olustur:active{
+        transform: scale(1.3);
+    }
